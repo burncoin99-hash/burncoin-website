@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>🔥 BurnCoin — Official Airdrop & Proof Portal</title>
+<style>
+body{font-family:sans-serif;margin:0;padding:0;background:#fff;color:#111}
+.container{max-width:950px;margin:auto;padding:20px}
+.btn{display:inline-block;padding:10px 14px;border:0;border-radius:8px;font-weight:700;color:#fff;cursor:pointer}
+.btn-buy{background:#22c55e}
+.btn-claim{background:#0ea5e9}
+.btn-spin{background:#111}
+.card{border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-top:10px;background:#fafafa}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.mini{font-size:12px;color:#555}
+.h1{font-size:22px;font-weight:800;margin:4px 0}
+.popup{position:fixed;bottom:80px;right:20px;background:#0ea5e9;color:#fff;padding:12px 16px;border-radius:10px;display:none;z-index:50}
+.popup.show{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+ol{margin:0;padding-left:20px}
+a{color:#0ea5e9;text-decoration:none}
+a:hover{text-decoration:underline}
+h3{margin:6px 0 8px}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="h1">🔥 BurnCoin Airdrop Dashboard</h1>
+  <p>Daily 100 pts • Spin up to 100 • Referral +50 (first claim only)</p>
+  <button class="btn btn-buy" id="buyBtn">BUY BURN COIN</button>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>Total Points</h3>
+      <div id="total">0</div>
+      <div class="mini">User ID: <span id="uid"></span></div>
+    </div>
+    <div class="card">
+      <h3>Daily Claim</h3>
+      <div id="daily">0</div>
+      <button class="btn btn-claim" id="claimBtn">CLAIM 100</button>
+      <div class="mini" id="dailyTimer"></div>
+    </div>
+    <div class="card">
+      <h3>Spin Points</h3>
+      <div id="spin">0</div>
+      <button class="btn btn-spin" id="spinBtn">SPIN</button>
+      <div class="mini" id="spinTimer"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Referral Bonus</h3>
+    <div class="mini">+50 when your friend makes their first claim</div>
+    <div class="mini">Your referral link:</div>
+    <div id="refLink" style="word-break:break-all;font-size:12px"></div>
+  </div>
+
+  <div class="card">
+    <h3>⏳ Airdrop Distribution Countdown</h3>
+    <div id="countdown" style="font-weight:700"></div>
+  </div>
+
+  <section id="leaderboard" class="card">
+    <h3>🏆 Top BurnPoints Holders</h3>
+    <ol id="lb-list"></ol>
+  </section>
+
+  <!-- ==================  Whitepaper & Proof Section ================== -->
+  <div class="card">
+    <h3>📜 BurnCoin Whitepaper</h3>
+    <p>BurnCoin (BURN) is a decentralized BEP-20 token on Binance Smart Chain with a powerful deflationary system — 1% burn per transaction until only 100,000 BURN remain from the 1,000,000 total supply.</p>
+    <ul>
+      <li>Total Supply: <b>1,000,000 BURN</b></li>
+      <li>Burn Mechanism: 1% per transaction</li>
+      <li>Liquidity Locked: 5 years</li>
+      <li>Airdrop Locked: 5 years + 1 day</li>
+      <li>Owner Lock: 5 years</li>
+      <li>Airdrop Distribution: After 5-year claim period</li>
+    </ul>
+    <a href="https://github.com/deutapoudel/burncoin/blob/main/BurnCoin_Whitepaper.pdf" 
+       target="_blank" class="btn btn-claim">📄 VIEW WHITEPAPER</a>
+  </div>
+
+  <div class="card">
+    <h3>🔒 Token Lock Proof</h3>
+    <p>All BurnCoin allocations are locked and verifiable on BscScan:</p>
+    <ul>
+      <li>🔹 <b>LP Lock:</b> <a href="https://bscscan.com/address/0x776d37070174F60A5819d4e3CF6c7d38578599B7" target="_blank">View Proof</a></li>
+      <li>🔹 <b>Airdrop Lock:</b> <a href="https://bscscan.com/address/0x78ccc4667F0e65A243811d014E8B46D929151389" target="_blank">View Proof</a></li>
+      <li>🔹 <b>Team Lock:</b> <a href="https://bscscan.com/address/0x2FAf2CD87366cF6640654aDfBf53BedF9Ae90657" target="_blank">View Proof</a></li>
+    </ul>
+    <p class="mini">Lock start: Aug 8, 2025 • Duration: 5 years • Verified on Remix Locker</p>
+  </div>
+
+  <div class="card">
+    <h3>⚙️ Contract Information</h3>
+    <ul>
+      <li>Contract Address: <b>0x2FAf2CD87366cF6640654aDfBf53BedF9Ae90657</b></li>
+      <li>Blockchain: <b>BNB Smart Chain (BEP-20)</b></li>
+    </ul>
+    <a href="https://bscscan.com/token/0x2FAf2CD87366cF6640654aDfBf53BedF9Ae90657" target="_blank" class="btn btn-buy">VIEW ON BSCSCAN</a>
+  </div>
+
+  <div class="mini" style="text-align:center;margin-top:20px;">
+    © 2025 BurnCoin Project | Secure, Transparent, Deflationary Future 🔥
+  </div>
+</div>
+
+<div class="popup" id="popup"></div>
+
+<script>
+const BUY_LINK="https://pancakeswap.finance/swap?outputCurrency=0x2FAf2CD87366cF6640654aDfBf53BedF9Ae90657";
+const UID_KEY="burn_uid"; const LS_KEY="burn_data_v1";
+function uid(){if(!localStorage.getItem(UID_KEY)){localStorage.setItem(UID_KEY,Math.random().toString(36).slice(2,10));}return localStorage.getItem(UID_KEY);}
+const me=uid();
+function getData(){return JSON.parse(localStorage.getItem(LS_KEY)||"{}");}
+function saveData(d){localStorage.setItem(LS_KEY,JSON.stringify(d));}
+function popup(msg){const p=document.getElementById("popup");p.textContent=msg;p.classList.add("show");setTimeout(()=>p.classList.remove("show"),4000);}
+function fmt(ms){const s=Math.floor(ms/1000);const d=Math.floor(s/86400),h=Math.floor((s%86400)/3600),m=Math.floor((s%3600)/60),sec=s%60;const pad=n=>String(n).padStart(2,"0");return`${pad(d)}d ${pad(h)}h ${pad(m)}m ${pad(sec)}s`;}
+function weighted(v,w){let r=Math.random()*100,a=0;for(let i=0;i<v.length;i++){a+=w[i];if(r<a)return v[i];}return v[0];}
+
+const cfg={daily:100,spinVals:[10,20,30,50,100],spinW:[50,20,20,6,4],cd:24*3600*1000,air:5*365*24*3600*1000,start:Date.now()};
+let d=getData();if(!d[me])d[me]={email:me+"@demo.com",daily:0,spin:0,ref:0,lastDaily:0,lastSpin:0};
+saveData(d);
+document.getElementById("uid").textContent=me;
+document.getElementById("refLink").textContent=location.origin+location.pathname+"?ref="+me;
+
+function update(){
+  const u=d[me];const t=u.daily+u.spin+u.ref;
+  document.getElementById("total").textContent=t;
+  document.getElementById("daily").textContent=u.daily;
+  document.getElementById("spin").textContent=u.spin;
+  const dd=cfg.cd-(Date.now()-u.lastDaily);document.getElementById("dailyTimer").textContent=dd>0?"wait "+fmt(dd):"ready";
+  const ss=cfg.cd-(Date.now()-u.lastSpin);document.getElementById("spinTimer").textContent=ss>0?"wait "+fmt(ss):"ready";
+}
+update();
+
+document.getElementById("claimBtn").onclick=()=>{
+  const u=d[me];if(Date.now()-u.lastDaily<cfg.cd)return;
+  u.daily+=cfg.daily;u.lastDaily=Date.now();saveData(d);popup("+100 points added!");update();saveUser();
+};
+document.getElementById("spinBtn").onclick=()=>{
+  const u=d[me];if(Date.now()-u.lastSpin<cfg.cd)return;
+  const r=weighted(cfg.spinVals,cfg.spinW);u.spin+=r;u.lastSpin=Date.now();saveData(d);popup("+"+r+" points from spin!");update();saveUser();
+};
+document.getElementById("buyBtn").onclick=()=>window.open(BUY_LINK,"_blank");
+
+function tick(){const rem=cfg.start+cfg.air-Date.now();document.getElementById("countdown").textContent=rem>0?fmt(rem):"Completed";}
+setInterval(tick,1000);tick();
+
+function maskEmail(e){if(!e||!e.includes("@"))return"hidden";const[n,dom]=e.split("@");const s=n.slice(0,3)+"*";return s+"@"+dom.split(".")[0]+"…";}
+function saveUser(){let all=JSON.parse(localStorage.getItem("bc_all_users")||"[]");const uidx=all.findIndex(x=>x.email===d[me].email);const tot=d[me].daily+d[me].spin+d[me].ref;if(uidx>-1)all[uidx].total=tot;else all.push({email:d[me].email,total:tot});localStorage.setItem("bc_all_users",JSON.stringify(all));renderLB();}
+function renderLB(){const l=document.getElementById("lb-list");let all=[];try{all=JSON.parse(localStorage.getItem("bc_all_users")||"[]");}catch(e){}if(!all.length){all=[{email:"deuta.poudel@gmail.com",total:1800},{email:"hegehrj@hotmail.com",total:1600},{email:"ram123@yahoo.com",total:1450}];}
+all.sort((a,b)=>b.total-a.total);const top=all.slice(0,3);l.innerHTML=top.map((u,i)=>`<li><b>Top ${i+1}</b> — ${maskEmail(u.email)} <span style="opacity:.6">(${u.total} pts)</span></li>`).join("");}
+renderLB();
+</script>
+</body>
+</html>
