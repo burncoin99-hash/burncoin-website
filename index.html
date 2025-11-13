@@ -1,680 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>BurnCoin — Official Website</title>
-<meta name="description" content="Welcome to BurnCoin. Sign up to earn daily BurnPoints, spin to win, invite friends, and buy BurnCoin on PancakeSwap.">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BurnCoin Official Website</title>
+
 <style>
-  :root{
-    --bg:#0b1220; --bg2:#07101b;
-    --card:#101a2b; --muted:#9bb0c3;
-    --text:#eaf2ff; --brand:#19d36b; --brand-2:#2e8bff;
-    --accent:#ff7a1a; --ok:#19d36b; --warn:#ffb020; --danger:#ff4d4d;
-    --ring: 0 0 0 2px rgba(25,211,107,.35);
-  }
-  [data-theme="light"]{
-    --bg:#f7fafc; --bg2:#eef3f8; --card:#ffffff; --text:#0b1220; --muted:#5c6b7a;
-  }
-  *{box-sizing:border-box} html,body{height:100%}
-  body{
-    margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color:var(--text); background:radial-gradient(1200px 700px at 60% 0%, rgba(46,139,255,.12), transparent 60%),
-                       radial-gradient(1000px 600px at 10% 10%, rgba(255,122,26,.10), transparent 60%),
-                       linear-gradient(180deg,var(--bg),var(--bg2));
-  }
-  a{color:inherit; text-decoration:none}
-  .wrap{max-width:1100px; margin:0 auto; padding:28px 16px}
-  /* Header */
-  .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px}
-  .left, .right{display:flex; align-items:center; gap:8px}
-  .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
-  .logo{width:28px; height:28px; border-radius:9px; background:
-    radial-gradient(18px 18px at 55% 45%, #ffcf7a, #ff7a1a 55%, #b43a00 70%),
-    radial-gradient(60px 40px at 60% 30%, rgba(255,122,26,.35), transparent 60%),
-    #111;}
-  .chip{font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12)}
-  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:700;
-       border-radius:12px; padding:12px 18px; border:1px solid transparent; cursor:pointer}
-  .btn.brand{background:linear-gradient(180deg,#1fe27a,#12b45e); color:#03140b; box-shadow:0 8px 20px rgba(31,226,122,.25)}
-  .btn.brand:active{transform:translateY(1px)}
-  .btn.blue{background:linear-gradient(180deg,#3596ff,#2b7de1); color:#041019; box-shadow:0 8px 20px rgba(53,150,255,.22)}
-  .btn.ghost{background:transparent; border-color:rgba(255,255,255,.18)}
-  .btn.small{padding:8px 12px; border-radius:10px; font-weight:600}
-  .select{appearance:none; border:1px solid rgba(255,255,255,.16); background:var(--card); color:var(--text);
-          padding:10px 12px; border-radius:10px}
-  /* Hero */
-  .hero{padding:72px 0 28px; text-align:center}
-  h1{font-size:38px; line-height:1.12; margin:0 0 10px}
-  .sub{opacity:.9; margin:0 0 26px; font-size:14px}
-  .cta{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:16px 0 10px}
-  /* Countdown card */
-  .card{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:18px}
-  .center{display:flex; justify-content:center}
-  .count{font-weight:800; letter-spacing:.4px}
-  .badge{font-size:13px; color:var(--muted); display:flex; align-items:center; gap:8px; justify-content:center; margin-bottom:6px}
-  /* Footer links */
-  footer{margin-top:40px; padding:28px 0 60px; background:linear-gradient(180deg,transparent, rgba(0,0,0,.25))}
-  .links{display:flex; gap:16px; flex-wrap:wrap; justify-content:center}
-  .links a{padding:8px 12px; border-radius:10px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:13px}
-  .links a:hover{box-shadow:0 0 0 2px rgba(255,255,255,.1) inset}
-  .muted{color:var(--muted); text-align:center; margin-top:10px; font-size:12px}
-  /* Modal / panels */
-  .overlay{position:fixed; inset:0; display:none; background:rgba(0,0,0,.6); z-index:30}
-  .panel{position:fixed; inset:0; display:none; z-index:40; overflow:auto}
-  .panel .inner{max-width:560px; margin:80px auto; background:var(--card); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:22px}
-  .panel h2{margin:0 0 8px}
-  label{font-size:13px; color:var(--muted)}
-  input{width:100%; padding:12px 14px; border-radius:12px; background:#0e1727; color:var(--text);
-        border:1px solid rgba(255,255,255,.16); outline:none}
-  [data-theme="light"] input{background:#fff}
-  .row{display:grid; grid-template-columns:1fr; gap:12px}
-  .stack{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-  .grid{display:grid; gap:14px}
-  .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-  /* Dashboard */
-  .dash{display:none; padding:18px 0 50px}
-  .cards{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px}
-  @media(max-width:900px){ .cards{grid-template-columns:1fr} }
-  .title{font-weight:800; margin-bottom:6px}
-  .value{font-size:22px; font-weight:800}
-  /* Wheel */
-  .wheel-wrap{display:flex; flex-direction:column; align-items:center; gap:12px}
-  .wheel{width:260px; height:260px; border-radius:50%; border:10px solid rgba(255,255,255,.08);
-         background:conic-gradient(#12233a 0 180deg, #0e1c2f 0 360deg); position:relative; overflow:hidden}
-  .slice{position:absolute; inset:0; clip-path: polygon(50% 50%, 0% 0%, 100% 0%); transform-origin:50% 50%}
-  .slice span{position:absolute; left:50%; top:12%; transform:translateX(-50%); font-weight:800}
-  .pointer{width:0; height:0; border-left:10px solid transparent; border-right:10px solid transparent; border-bottom:16px solid var(--accent);
-           position:absolute; left:50%; transform:translateX(-50%); top:-6px; filter:drop-shadow(0 4px 6px rgba(0,0,0,.4))}
-  .btn.spin{min-width:120px}
-  /* Toast / popup */
-  .toast{position:fixed; right:16px; bottom:16px; z-index:50; background:var(--card); color:var(--text); border:1px solid rgba(255,255,255,.14);
-         padding:12px 14px; border-radius:12px; box-shadow:0 12px 26px rgba(0,0,0,.28); display:none}
-  .popup{display:none; position:fixed; inset:0; z-index:60; background:rgba(0,0,0,.6)}
-  .popup .box{max-width:520px; margin:80px auto; background:var(--card); border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:20px}
-  /* Utility */
-  .hidden{display:none}
-  .ok{color:var(--ok)} .warn{color:var(--warn)} .danger{color:var(--danger)}
-  .note{font-size:12px; color:var(--muted)}
+    body {
+        font-family: Arial, sans-serif;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+        color: #000;
+        transition: 0.3s;
+    }
+
+    .dark-mode {
+        background: #0A0A0A;
+        color: #fff;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: transparent;
+    }
+
+    .btn {
+        padding: 15px;
+        text-align: center;
+        border-radius: 8px;
+        width: 85%;
+        margin: 10px auto;
+        font-size: 18px;
+        cursor: pointer;
+        font-weight: bold;
+        display: block;
+        text-decoration: none;
+        color: white;
+    }
+
+    .green-btn { background: #17c964; }
+    .green-btn:hover { background: #0fa954; }
+
+    .blue-btn { background: #007bff; }
+    .blue-btn:hover { background: #0063cc; }
+
+    .language-btn, .mode-btn {
+        padding: 8px 15px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .mode-btn { background: #222; color: white; }
+    .language-btn { background: #f0f0f0; }
+
+    .title {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 28px;
+        font-weight: 700;
+    }
 </style>
-</head>
-<body data-theme="light">
-  <div class="wrap">
-    <header class="topbar">
-      <div class="left">
-        <button id="modeBtn" class="btn ghost small">🌗 Mode</button>
-      </div>
-      <div class="brand">
-        <span class="logo" aria-hidden="true"></span> <span>BurnCoin</span>
-        <span class="chip" id="versionChip">Official Website</span>
-      </div>
-      <div class="right">
-        <select id="langSel" class="select" aria-label="Language">
-          <!-- 10 languages: EN default -->
-          <option value="en" selected>English</option>
-          <option value="es">Español</option>
-          <option value="hi">हिन्दी</option>
-          <option value="ne">नेपाली</option>
-          <option value="tr">Türkçe</option>
-          <option value="ru">Русский</option>
-          <option value="ar">العربية</option>
-          <option value="zh">简体中文</option>
-          <option value="ja">日本語</option>
-          <option value="ko">한국어</option>
-        </select>
-      </div>
-    </header>
-
-    <!-- HERO -->
-    <section id="hero" class="hero">
-      <h1 id="t_welcome">WELCOME TO THE BURNCOIN OFFICIAL WEBSITE</h1>
-      <p class="sub" id="t_sub">Sign up to start earning daily Burn Points and join our growing crypto community.</p>
-      <div class="cta">
-        <button class="btn brand" id="openSignup"><span id="t_signup">Sign Up & Earn Points</span></button>
-        <a class="btn blue" id="buyNow" target="_blank" rel="noopener">
-          <span id="t_buy">Buy BurnCoin Now</span>
-        </a>
-      </div>
-      <div class="center" style="margin-top:18px">
-        <div class="card">
-          <div class="badge">🔥 <span id="t_airdrop">Airdrop Distribution Countdown</span></div>
-          <div class="count value" id="countdown">—</div>
-          <div class="note" id="t_gasnote" style="text-align:center; margin-top:6px;">
-            A small gas fee will apply at withdrawal time.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DASHBOARD -->
-    <section id="dash" class="dash">
-      <div class="cards">
-        <div class="card">
-          <div class="title" id="t_total">Total Points</div>
-          <div class="value"><span id="points">0</span></div>
-          <div class="note"><span id="t_userid">User ID:</span> <span id="uid">—</span></div>
-        </div>
-
-        <div class="card">
-          <div class="title" id="t_daily">Daily Claim</div>
-          <div class="value">100</div>
-          <div class="stack">
-            <button class="btn blue" id="claimBtn">CLAIM 100</button>
-            <span class="note" id="claimTimer">ready</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="title" id="t_spin">Spin Points</div>
-          <div class="value" id="lastSpinVal">—</div>
-          <div class="wheel-wrap">
-            <div class="pointer"></div>
-            <div class="wheel" id="wheel"></div>
-            <button class="btn brand spin" id="spinBtn">SPIN</button>
-            <span class="note" id="spinTimer">ready</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="title">Referral Bonus</div>
-          <div class="note" id="t_refnote">
-            +500 when your friend makes their first claim (using your link).
-          </div>
-          <div class="grid">
-            <input id="myRef" readonly />
-            <div class="stack">
-              <button class="btn ghost small" id="copyRef">Copy Link</button>
-              <button class="btn ghost small" id="shareRef">Share…</button>
-            </div>
-            <div class="note">Only new devices / new users are counted to prevent abuse.</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="title" id="t_countcard">Airdrop Distribution Countdown</div>
-          <div class="value" id="countdown2">—</div>
-        </div>
-
-        <div class="card">
-          <div class="title">Top BurnPoints Holders</div>
-          <ol id="leaders" style="margin:6px 0 0 18px">
-            <li>—</li><li>—</li><li>—</li>
-          </ol>
-          <div class="note" style="margin-top:8px">Local demo leaderboard (server sync coming later).</div>
-        </div>
-
-        <div class="card" style="grid-column:1/-1">
-          <div class="title">BurnCoin Whitepaper</div>
-          <div class="note" style="margin-bottom:10px">Decentralized BEP-20 on BSC with 1% burn per transaction until 100,000 BURN remain.</div>
-          <ul style="margin:0 0 10px 18px; padding:0">
-            <li>Total Supply: 1,000,000 BURN</li>
-            <li>Burn Mechanism: 1% per transaction</li>
-            <li>Liquidity Locked: 5 years</li>
-            <li>Airdrop Locked: 5 years + 1 day</li>
-            <li>Owner Lock: 5 years</li>
-            <li>Airdrop Distribution: after the 5-year claim period</li>
-          </ul>
-          <div class="stack">
-            <a class="btn ghost small" id="whitepaper" target="_blank">Whitepaper (PDF)</a>
-            <a class="btn ghost small" id="lockproof" target="_blank">Liquidity & Lock Proof</a>
-            <a class="btn ghost small" id="contact" target="_blank">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="wrap">
-      <div class="links">
-        <a id="f_whitepaper" target="_blank">Whitepaper</a>
-        <a id="f_lock" target="_blank">Liquidity & Lock Proof</a>
-        <a id="f_contact" target="_blank">Contact Us</a>
-        <a id="f_fb" target="_blank">Facebook</a>
-        <a id="f_tt" target="_blank">TikTok</a>
-        <a id="f_mail" target="_blank">projectburncoin@gmail.com</a>
-      </div>
-      <div class="muted">© 2025 BurnCoin | Built with ❤️ for the community.</div>
-    </div>
-  </footer>
-
-  <!-- SIGNUP PANEL -->
-  <div id="shade" class="overlay"></div>
-  <div id="signup" class="panel">
-    <div class="inner">
-      <h2 id="t_signup_title">Create your BurnCoin account</h2>
-      <p class="note" id="t_signup_sub" style="margin-top:-4px">Use email + password. We’ll send a 6-digit OTP to verify.</p>
-      <div class="row" style="margin:14px 0">
-        <div class="grid">
-          <label id="t_email">Email</label>
-          <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
-        </div>
-        <div class="grid">
-          <label id="t_pass">Password</label>
-          <input id="pass" type="password" placeholder="Choose a strong password" autocomplete="new-password">
-        </div>
-        <div class="stack">
-          <button id="sendOtp" class="btn brand small">Send OTP</button>
-          <span class="note" id="otpStatus">—</span>
-        </div>
-        <div class="grid cols-3">
-          <div class="grid">
-            <label>OTP</label>
-            <input id="otp" placeholder="6 digits" maxlength="6">
-          </div>
-          <div class="grid">
-            <label>&nbsp;</label>
-            <button id="verifyOtp" class="btn blue small">Verify & Create</button>
-          </div>
-          <div class="grid">
-            <label>&nbsp;</label>
-            <button id="closeSignup" class="btn ghost small">Close</button>
-          </div>
-        </div>
-        <div class="note">Demo mode: OTP is generated locally and shown here so you can test instantly. Later we’ll plug real email (EmailJS / API).</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Motivational popup -->
-  <div id="popup" class="popup">
-    <div class="box">
-      <h3 id="popTitle">Before it’s too late…</h3>
-      <p id="popMsg" style="margin-top:-4px"></p>
-      <div class="stack" style="margin-top:10px">
-        <a class="btn blue" id="popBuy" target="_blank">Buy BurnCoin Now</a>
-        <button class="btn ghost" id="popClose">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
-  <div id="toast" class="toast"></div>
 
 <script>
-/* ----------------- CONFIG (links, timings) ----------------- */
-const BUY_LINK = "https://pancakeswap.finance/swap?outputCurrency=0x2FAf2CD87366cF6640654aDfBf53BedF9Ae90657&chain=bsc";
-const FACEBOOK_LINK = "https://www.facebook.com/share/17ba5tHLuh/?mibextid=wwXIfr";
-const TIKTOK_LINK = "https://www.tiktok.com/@burn.coin?_r=1&_t=ZS-91B7JazGxKp";
-const CONTACT_EMAIL = "projectburncoin@gmail.com";
-/* Put real docs later: */
-const WHITEPAPER_URL = "#";          // replace with your PDF link when ready
-const LOCKPROOF_URL = "#";           // replace with your TeamFinance/PinkLock page
-
-/* Distribution date: 31 Dec 2030 12:30 (Nepal +5:45) -> convert to UTC */
-const DIST_UTC = Date.parse("2030-12-31T06:45:00Z");
-
-/* Spin reward probabilities and values */
-const SPIN_REWARDS = [
-  {pts:10, prob:0.50, color:"#0e1c2f"},
-  {pts:20, prob:0.20, color:"#12233a"},
-  {pts:30, prob:0.20, color:"#0e1c2f"},
-  {pts:50, prob:0.06, color:"#12233a"},
-  {pts:100,prob:0.04, color:"#0e1c2f"},
-];
-
-/* ----------------- i18n minimal dictionary ----------------- */
-const I18N = {
-  en:{ welcome:"WELCOME TO THE BURNCOIN OFFICIAL WEBSITE",
-       sub:"Sign up to start earning daily Burn Points and join our growing crypto community.",
-       signup:"Sign Up & Earn Points", buy:"Buy BurnCoin Now",
-       airdrop:"Airdrop Distribution Countdown",
-       total:"Total Points", userid:"User ID:", daily:"Daily Claim", spin:"Spin Points",
-       gas:"A small gas fee will apply at withdrawal time.",
-       signup_t:"Create your BurnCoin account",
-       signup_s:"Use email + password. We’ll send a 6-digit OTP to verify.",
-  },
-  es:{ welcome:"BIENVENIDO AL SITIO OFICIAL DE BURNCOIN",
-       sub:"Regístrate para ganar Burn Points diarios y únete a nuestra comunidad cripto.",
-       signup:"Regístrate y gana puntos", buy:"Comprar BurnCoin ahora",
-       airdrop:"Cuenta regresiva del airdrop", total:"Puntos totales", userid:"ID de usuario:",
-       daily:"Recompensa diaria", spin:"Girar", gas:"Se aplicará una pequeña comisión de gas al retirar.",
-       signup_t:"Crea tu cuenta de BurnCoin", signup_s:"Usa correo y contraseña. Te enviaremos un OTP de 6 dígitos.",
-  },
-  hi:{ welcome:"बर्नकॉइन की आधिकारिक वेबसाइट में आपका स्वागत है",
-       sub:"दैनिक बर्न पॉइंट्स कमाने के लिए साइन-अप करें और क्रिप्टो समुदाय से जुड़ें।",
-       signup:"साइन-अप करें व पॉइंट्स कमाएँ", buy:"अभी BurnCoin खरीदें",
-       airdrop:"एयरड्रॉप काउंटडाउन", total:"कुल पॉइंट्स", userid:"यूज़र आईडी:", daily:"दैनिक क्लेम",
-       spin:"स्पिन पॉइंट्स", gas:"विथड्रॉ पर थोड़ा गैस शुल्क लगेगा।",
-       signup_t:"अपना BurnCoin खाता बनाएँ", signup_s:"ईमेल + पासवर्ड उपयोग करें। 6 अंकों का OTP भेजेंगे।",
-  },
-  ne:{ welcome:"BurnCoin आधिकारिक वेबसाइटमा स्वागत छ",
-       sub:"दैनिक Burn Points कमाउन साइनअप गर्नुहोस् र हाम्रो क्रिप्टो समुदायमा जोडिनुहोस्।",
-       signup:"साइनअप गरेर पोइन्ट कमाउनुहोस्", buy:"अहिले BurnCoin किन्नुहोस्",
-       airdrop:"एयरड्रप काउन्टडाउन", total:"कुल पोइन्ट", userid:"प्रयोगकर्ता ID:", daily:"दैनिक क्लेम",
-       spin:"स्पिन पोइन्ट", gas:"विद्रावल गर्दा सानो ग्यास शुल्क लाग्छ।",
-       signup_t:"तपाईंको BurnCoin खाता बनाउनुहोस्", signup_s:"इमेल + पासवर्ड। 6 अङ्कको OTP पठाइन्छ।",
-  },
-  tr:{ welcome:"BurnCoin Resmi Sitesine Hoş Geldiniz",
-       sub:"Günlük Burn Puanları kazanmak için kaydolun ve topluluğa katılın.",
-       signup:"Kayıt ol ve puan kazan", buy:"Şimdi BurnCoin Satın Al",
-       airdrop:"Airdrop Geri Sayımı", total:"Toplam Puan", userid:"Kullanıcı ID:", daily:"Günlük Talep",
-       spin:"Çark Puanları", gas:"Çekimde küçük bir gas ücreti alınır.",
-       signup_t:"BurnCoin hesabı oluştur", signup_s:"E-posta + şifre. 6 haneli OTP göndereceğiz.",
-  },
-  ru:{ welcome:"Добро пожаловать на официальный сайт BurnCoin",
-       sub:"Регистрируйтесь, чтобы получать ежедневные BurnPoints и присоединяйтесь к сообществу.",
-       signup:"Регистрация и получение очков", buy:"Купить BurnCoin сейчас",
-       airdrop:"Обратный отсчёт airdrop", total:"Всего очков", userid:"ID пользователя:",
-       daily:"Ежедневное начисление", spin:"Колесо очков", gas:"Комиссия газа взимается при выводе.",
-       signup_t:"Создайте аккаунт BurnCoin", signup_s:"E-mail + пароль. Отправим 6-значный OTP.",
-  },
-  ar:{ welcome:"مرحباً بك في الموقع الرسمي لـ BurnCoin",
-       sub:"سجّل لربح نقاط يومية وانضم إلى مجتمعنا.",
-       signup:"سجّل واربح نقاط", buy:"اشترِ BurnCoin الآن",
-       airdrop:"العد التنازلي للتوزيع", total:"إجمالي النقاط", userid:"معرّف المستخدم:",
-       daily:"المطالبة اليومية", spin:"عجلة النقاط", gas:"ستُطبّق رسوم غاز صغيرة عند السحب.",
-       signup_t:"أنشئ حساب BurnCoin", signup_s:"استخدم البريد وكلمة المرور. سنرسل OTP مكوناً من 6 أرقام.",
-  },
-  zh:{ welcome:"欢迎来到 BurnCoin 官方网站",
-       sub:"注册即可开始每日赚取 Burn 积分，加入我们的加密社区。",
-       signup:"注册并赚积分", buy:"立即购买 BurnCoin",
-       airdrop:"空投发放倒计时", total:"总积分", userid:"用户ID：", daily:"每日领取",
-       spin:"转盘积分", gas:"提现时会收取少量 gas 费。",
-       signup_t:"创建 BurnCoin 账户", signup_s:"使用邮箱+密码，我们会发送 6 位 OTP。",
-  },
-  ja:{ welcome:"BurnCoin 公式サイトへようこそ",
-       sub:"登録して毎日Burnポイントを獲得し、コミュニティに参加しよう。",
-       signup:"登録してポイント獲得", buy:"今すぐ BurnCoin を購入",
-       airdrop:"エアドロップ残り時間", total:"合計ポイント", userid:"ユーザーID：", daily:"デイリー受取",
-       spin:"スピンポイント", gas:"出金時に少額のガス代がかかります。",
-       signup_t:"BurnCoin アカウントを作成", signup_s:"メール＋パスワード。6桁のOTPを送信します。",
-  },
-  ko:{ welcome:"BurnCoin 공식 웹사이트에 오신 것을 환영합니다",
-       sub:"가입하고 매일 Burn 포인트를 받고 커뮤니티에 참여하세요.",
-       signup:"가입하고 포인트 받기", buy:"지금 BurnCoin 구매",
-       airdrop:"에어드랍 카운트다운", total:"총 포인트", userid:"사용자 ID:", daily:"일일 수령",
-       spin:"스핀 포인트", gas:"출금 시 소량의 가스비가 부과됩니다.",
-       signup_t:"BurnCoin 계정 만들기", signup_s:"이메일 + 비밀번호. 6자리 OTP를 보냅니다.",
-  },
-};
-
-function t(key){ const L = I18N[state.lang] || I18N.en; return L[key] || I18N.en[key] || key; }
-
-/* ----------------- State & Storage ----------------- */
-const state = {
-  lang: localStorage.getItem("burn_lang") || "en",
-  theme: localStorage.getItem("burn_theme") || "light",
-  uid: localStorage.getItem("burn_uid") || null,
-  points: parseInt(localStorage.getItem("burn_points")||"0",10),
-  lastClaim: parseInt(localStorage.getItem("burn_lastClaim")||"0",10),
-  lastSpin: parseInt(localStorage.getItem("burn_lastSpin")||"0",10),
-  otp: null,
-};
-
-/* ----------------- Helpers ----------------- */
-const $ = s => document.querySelector(s);
-function toast(msg, ms=2400){ const el=$("#toast"); el.textContent=msg; el.style.display="block"; setTimeout(()=>el.style.display="none", ms); }
-function setPoints(v){ state.points=v; localStorage.setItem("burn_points", v); $("#points").textContent=v; refreshLeaders(); }
-function maskEmail(e){ if(!e) return "—"; const [u,d]=e.split("@"); return (u.slice(0,2)+"***@"+(d?d.slice(0,4)+"…":"")); }
-function since(ts){ return Date.now() - ts; }
-function secs(ms){ return Math.max(0, Math.floor(ms/1000)); }
-function fmtRemain(ms){
-  const s = secs(ms); const d=Math.floor(s/86400), h=Math.floor((s%86400)/3600), m=Math.floor((s%3600)/60), ss=s%60;
-  return `${d}d ${String(h).padStart(2,"0")}h ${String(m).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
+function toggleMode(){
+    document.body.classList.toggle("dark-mode");
 }
-
-/* ----------------- Theme & Lang ----------------- */
-document.body.setAttribute("data-theme", state.theme);
-$("#langSel").value = state.lang;
-function applyLang(){
-  $("#t_welcome").textContent=t("welcome");
-  $("#t_sub").textContent=t("sub");
-  $("#t_signup").textContent=t("signup");
-  $("#t_buy").textContent=t("buy");
-  $("#t_airdrop").textContent=t("airdrop");
-  $("#t_gasnote").textContent=t("gas");
-  $("#t_total").textContent=t("total");
-  $("#t_userid").textContent=t("userid");
-  $("#t_daily").textContent=t("daily");
-  $("#t_spin").textContent=t("spin");
-  $("#t_countcard").textContent=t("airdrop");
-  $("#t_signup_title").textContent=t("signup_t");
-  $("#t_signup_sub").textContent=t("signup_s");
-}
-applyLang();
-
-$("#modeBtn").onclick = ()=>{
-  state.theme = (state.theme==="light"?"dark":"light");
-  document.body.setAttribute("data-theme", state.theme);
-  localStorage.setItem("burn_theme", state.theme);
-};
-$("#langSel").onchange = (e)=>{
-  state.lang=e.target.value; localStorage.setItem("burn_lang", state.lang); applyLang();
-};
-
-/* ----------------- Links ----------------- */
-$("#buyNow").href = BUY_LINK;
-$("#popBuy").href = BUY_LINK;
-$("#whitepaper").href = WHITEPAPER_URL;
-$("#lockproof").href = LOCKPROOF_URL;
-$("#contact").href = "mailto:"+CONTACT_EMAIL;
-$("#f_whitepaper").href = WHITEPAPER_URL;
-$("#f_lock").href = LOCKPROOF_URL;
-$("#f_contact").href = "mailto:"+CONTACT_EMAIL;
-$("#f_fb").href = FACEBOOK_LINK;
-$("#f_tt").href = TIKTOK_LINK;
-$("#f_mail").href = "mailto:"+CONTACT_EMAIL;
-
-/* ----------------- Countdown ----------------- */
-function tickCountdown(){
-  const now = Date.now();
-  const remain = DIST_UTC - now;
-  const text = fmtRemain(remain);
-  $("#countdown").textContent = text;
-  $("#countdown2").textContent = text;
-
-  if(remain<=0){
-    $("#t_airdrop").textContent = "Airdrop Withdrawal";
-    $("#t_countcard").textContent = "Airdrop Withdrawal";
-    // In a real backend, show wallet address input and withdraw button here.
-  }
-}
-tickCountdown(); setInterval(tickCountdown, 1000);
-
-/* ----------------- Signup / OTP (client demo) ----------------- */
-function openSignup(){ $("#shade").style.display="block"; $("#signup").style.display="block"; }
-function closeSignup(){ $("#shade").style.display="none"; $("#signup").style.display="none"; }
-$("#openSignup").onclick=openSignup; $("#closeSignup").onclick=closeSignup;
-
-$("#sendOtp").onclick = ()=>{
-  const email = $("#email").value.trim();
-  const pass = $("#pass").value.trim();
-  if(!email || !pass){ toast("Enter email and password first"); return; }
-  // generate 6-digit OTP and “simulate” sending
-  state.otp = String(Math.floor(100000 + Math.random()*900000));
-  $("#otpStatus").textContent = "OTP: "+state.otp+"  (demo)";
-  toast("OTP generated (demo). Enter it below.");
-};
-$("#verifyOtp").onclick = ()=>{
-  const code = $("#otp").value.trim();
-  if(!state.otp){ toast("Click ‘Send OTP’ first."); return; }
-  if(code !== state.otp){ toast("Invalid OTP."); return; }
-  // success
-  const email = $("#email").value.trim();
-  state.uid = email;
-  localStorage.setItem("burn_uid", email);
-  $("#uid").textContent = maskEmail(state.uid);
-  // Build referral link
-  const myCode = (email.match(/[a-z0-9]/gi)||[]).slice(0,6).join("") + Math.floor(Math.random()*9);
-  const base = location.href.split("?")[0];
-  const myLink = base + "?ref=" + myCode;
-  localStorage.setItem("burn_ref", myLink);
-  $("#myRef").value = myLink;
-
-  // If page opened with ?ref= and this is first signup, mark that in local (demo)
-  const url = new URL(location.href);
-  const ref = url.searchParams.get("ref");
-  if(ref && !localStorage.getItem("burn_ref_awarded")){
-    // demo: award to current user to visualize flow (real award goes to referrer on server)
-    setPoints(state.points + 500);
-    localStorage.setItem("burn_ref_awarded","1");
-    toast("+500 referral bonus (demo only)");
-  }
-
-  // greet
-  closeSignup();
-  $("#hero").style.display="none";
-  $("#dash").style.display="block";
-  toast("Congratulations! You’re part of the BurnCoin family. Claim now.");
-};
-if(state.uid){ $("#uid").textContent = maskEmail(state.uid); }
-
-/* Show dashboard if already signed up */
-if(state.uid){
-  $("#hero").style.display="none";
-  $("#dash").style.display="block";
-  $("#myRef").value = localStorage.getItem("burn_ref") || "";
-}
-$("#points").textContent = state.points;
-
-/* ----------------- Daily claim ----------------- */
-const DAY = 24*60*60*1000;
-function updateClaimTimer(){
-  if(!state.lastClaim){ $("#claimTimer").textContent="ready"; return; }
-  const remain = DAY - since(state.lastClaim);
-  $("#claimTimer").textContent = remain>0 ? ("wait "+fmtRemain(remain)) : "ready";
-}
-updateClaimTimer(); setInterval(updateClaimTimer, 1000);
-
-$("#claimBtn").onclick = ()=>{
-  if(!state.uid){ openSignup(); return; }
-  const remain = state.lastClaim ? DAY - since(state.lastClaim) : 0;
-  if(remain>0){ toast("Please wait until the daily timer resets."); return; }
-  setPoints(state.points + 100);
-  state.lastClaim = Date.now(); localStorage.setItem("burn_lastClaim", state.lastClaim);
-  updateClaimTimer();
-  showMotivation(); // popup after claim
-};
-
-/* ----------------- Real spin wheel ----------------- */
-const wheel = $("#wheel");
-/* Build 5 slices with labels matching probabilities */
-function buildWheel(){
-  while(wheel.firstChild) wheel.removeChild(wheel.firstChild);
-  const segs = SPIN_REWARDS.length;
-  for(let i=0;i<segs;i++){
-    const ang = 360/segs;
-    const seg = document.createElement("div");
-    seg.className="slice";
-    seg.style.transform = `rotate(${i*ang}deg)`;
-    seg.style.background = `conic-gradient(${SPIN_REWARDS[i].color} 0 ${ang}deg)`;
-    const label = document.createElement("span");
-    label.textContent = SPIN_REWARDS[i].pts+"";
-    seg.appendChild(label);
-    wheel.appendChild(seg);
-  }
-}
-buildWheel();
-
-function weightedPick(){
-  const r = Math.random();
-  let acc=0;
-  for(const item of SPIN_REWARDS){
-    acc += item.prob;
-    if(r <= acc) return item;
-  }
-  return SPIN_REWARDS[0];
-}
-function updateSpinTimer(){
-  if(!state.lastSpin){ $("#spinTimer").textContent="ready"; return; }
-  const remain = DAY - since(state.lastSpin);
-  $("#spinTimer").textContent = remain>0 ? ("wait "+fmtRemain(remain)) : "ready";
-}
-updateSpinTimer(); setInterval(updateSpinTimer, 1000);
-
-let spinning = false, rot=0;
-$("#spinBtn").onclick = ()=>{
-  if(!state.uid){ openSignup(); return; }
-  const remain = state.lastSpin ? DAY - since(state.lastSpin) : 0;
-  if(remain>0){ toast("Spin available again after the timer resets."); return; }
-  if(spinning) return;
-  spinning=true;
-
-  const pick = weightedPick();
-  const segIndex = SPIN_REWARDS.findIndex(x=>x.pts===pick.pts);
-  const segs = SPIN_REWARDS.length;
-  const segAngle = 360/segs;
-  /* Aim so pointer lands within the chosen segment (pointer at 0deg / top) */
-  const targetFromTop = segIndex*segAngle + segAngle/2;
-  const extraTurns = 5 + Math.floor(Math.random()*2);
-  const target = extraTurns*360 + (360 - targetFromTop);
-  rot += target;
-
-  wheel.style.transition = "transform 4.2s cubic-bezier(.12,.6,0,1)";
-  wheel.style.transform = `rotate(${rot}deg)`;
-
-  setTimeout(()=>{
-    spinning=false;
-    $("#lastSpinVal").textContent = "+"+pick.pts;
-    setPoints(state.points + pick.pts);
-    state.lastSpin = Date.now(); localStorage.setItem("burn_lastSpin", state.lastSpin);
-    updateSpinTimer();
-  }, 4300);
-};
-
-/* ----------------- Share & Referral ----------------- */
-$("#copyRef").onclick = async ()=>{
-  const link = $("#myRef").value.trim();
-  if(!link){ toast("Create account first."); return;}
-  await navigator.clipboard.writeText(link);
-  toast("Referral link copied.");
-};
-$("#shareRef").onclick = async ()=>{
-  const link = $("#myRef").value.trim();
-  if(!link){ toast("Create account first."); return;}
-  const text = "Join BurnCoin and earn daily Burn Points. Use my link:";
-  if(navigator.share){
-    try{ await navigator.share({title:"BurnCoin", text, url:link}); }
-    catch(e){}
-  }else{
-    await navigator.clipboard.writeText(link);
-    toast("Link copied (share it anywhere).");
-  }
-};
-
-/* ----------------- Demo leaderboard ----------------- */
-function refreshLeaders(){
-  // Simple local-only sample using your own user as Top 1
-  const me = {email: state.uid || "demo@user", pts: state.points};
-  const sample = [
-    me,
-    {email:"k59*@demo.com", pts:110},
-    {email:"alpha*@mail.com", pts:90},
-  ].sort((a,b)=>b.pts-a.pts).slice(0,3);
-  const ol = $("#leaders"); ol.innerHTML="";
-  sample.forEach((u,i)=>{
-    const li = document.createElement("li");
-    li.textContent = `${i+1}. ${maskEmail(u.email)} (${u.pts} pts)`;
-    ol.appendChild(li);
-  });
-}
-refreshLeaders();
-
-/* ----------------- Motivation popup ----------------- */
-const slogans = [
-  "If you had bought 1 BTC in 2010 for a few dollars, you’d be a legend today.",
-  "Early adopters always look obvious in hindsight. Don’t be late twice.",
-  "Tiny, consistent actions beat perfect timing. Start small—start now.",
-  "Great stories begin with small positions and big conviction.",
-  "Future you will thank present you for taking action today.",
-];
-function showMotivation(){
-  const line = slogans[Math.floor(Math.random()*slogans.length)];
-  $("#popMsg").textContent = line+"  Buy BurnCoin now before it’s too late.";
-  $("#popup").style.display="block";
-}
-$("#popClose").onclick = ()=> $("#popup").style.display="none";
-
-/* ----------------- Init referral param display ----------------- */
-(function init(){
-  const base = location.href.split("?")[0];
-  $("#myRef").value = localStorage.getItem("burn_ref") || base+"?ref=k593790x";
-})();
-
 </script>
+
+</head>
+<body>
+
+<header>
+    <button class="mode-btn" onclick="toggleMode()">🌙 / ☀️</button>
+    <button class="language-btn">🌐 Language</button>
+</header>
+
+<h1 class="title">Welcome to the BurnCoin Official Website</h1>
+
+<a href="signup.html" class="btn green-btn">Sign Up & Earn BurnCoin Points</a>
+
+<a href="YOUR_BUY_LINK_HERE" class="btn green-btn">Buy BurnCoin Now</a>
+
 </body>
 </html>
